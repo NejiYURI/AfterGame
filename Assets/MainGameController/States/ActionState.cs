@@ -11,6 +11,14 @@ public class ActionState : GameState
 
     public override void StateStart()
     {
-        if (GameEventManager.instance) GameEventManager.instance.ActionStart.Invoke();
+        if (GameEventManager.instance) GameEventManager.instance.ActionStart.Invoke(true);
+        gameManager.StartCoroutine(TimeCounter());
+    }
+
+    IEnumerator TimeCounter()
+    {
+        yield return new WaitForSeconds(3f);
+        if (GameEventManager.instance) GameEventManager.instance.ActionStart.Invoke(false);
+        gameManager.SetState(new StartState(gameManager));
     }
 }

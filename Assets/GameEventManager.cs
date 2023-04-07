@@ -11,5 +11,5 @@ public class GameEventManager : MonoBehaviour
     {
         instance = this;
     }
-    public UnityEvent ActionStart;
+    public UnityEvent<bool> ActionStart;
 }

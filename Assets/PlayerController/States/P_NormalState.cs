@@ -11,12 +11,6 @@ public class P_NormalState : PlayerState
 
     public override void StateStart()
     {
-        if (GameEventManager.instance) GameEventManager.instance.ActionStart.AddListener(StateOver);
-    }
-
-    void StateOver()
-    {
-        if (GameEventManager.instance) GameEventManager.instance.ActionStart.RemoveListener(StateOver);
-        characterScript.SetState(new P_ActionState(characterScript));
+        characterScript.AimLine.enabled = false;
     }
 }

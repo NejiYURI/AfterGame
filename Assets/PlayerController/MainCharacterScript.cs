@@ -17,6 +17,10 @@ public class MainCharacterScript : PlayerStateMachine
     {
         AimLine = this.GetComponent<LineRenderer>();
         SetState(new P_NormalState(this));
+        if (GameEventManager.instance)
+        {
+            GameEventManager.instance.ActionStart.AddListener(ActionStart);
+        }
     }
 
     private void Update()
@@ -50,6 +54,11 @@ public class MainCharacterScript : PlayerStateMachine
         this.transform.LeanMove(AimLine.GetPosition(1), 0.05f);
     }
 
-
+    void ActionStart(bool IsStart)
+    {
+        State.StateEnd();
+        if(IsStart) SetState(new P_ActionState(this));
+        else SetState(new P_NormalState(this));
+    }
 
 }

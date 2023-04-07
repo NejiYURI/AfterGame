@@ -16,7 +16,6 @@ public class StartState : GameState
     IEnumerator StartTimer()
     {
         yield return new WaitForSeconds(1.5f);
-        Debug.Log("In");
         gameManager.SetState(new ActionState(gameManager));
     }
 
