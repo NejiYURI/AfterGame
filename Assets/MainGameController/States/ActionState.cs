@@ -19,6 +19,6 @@ public class ActionState : GameState
     {
         yield return new WaitForSeconds(3f);
         if (GameEventManager.instance) GameEventManager.instance.ActionStart.Invoke(false);
-        gameManager.SetState(new StartState(gameManager));
+        gameManager.SetState(new DealDamageState(gameManager));
     }
 }

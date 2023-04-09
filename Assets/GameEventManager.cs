@@ -12,4 +12,10 @@ public class GameEventManager : MonoBehaviour
         instance = this;
     }
     public UnityEvent<bool> ActionStart;
+
+    public UnityEvent DealDamage;
+
+    public UnityEvent SpawnBeat;
+
+    public UnityEvent SpawnSlash;
 }

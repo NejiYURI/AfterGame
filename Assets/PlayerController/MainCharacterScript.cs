@@ -7,6 +7,8 @@ public class MainCharacterScript : PlayerStateMachine
 {
     public LineRenderer AimLine;
 
+    public GameObject SlashLine;
+
     public float minDistance;
     public float MaxDistance;
 
@@ -59,6 +61,12 @@ public class MainCharacterScript : PlayerStateMachine
         State.StateEnd();
         if(IsStart) SetState(new P_ActionState(this));
         else SetState(new P_NormalState(this));
+    }
+
+    public void SpawnSlashLine(Vector2 start,Vector2 end)
+    {
+       GameObject obj= Instantiate(SlashLine, start, Quaternion.identity);
+        if (obj.GetComponent<SlahLineScript>()) obj.GetComponent<SlahLineScript>().SetLineRender(start, end);
     }
 
 }

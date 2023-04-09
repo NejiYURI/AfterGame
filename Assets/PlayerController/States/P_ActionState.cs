@@ -6,7 +6,7 @@ public class P_ActionState : PlayerState
 {
     public P_ActionState(MainCharacterScript characterScript) : base(characterScript)
     {
-
+        characterScript.AimLine.enabled = true;
     }
 
     public override void UpdateFunc()
@@ -27,7 +27,7 @@ public class P_ActionState : PlayerState
 
     public override void MouseClick()
     {
-        characterScript.SetState(new P_DashState(characterScript));
+        characterScript.SetState(new P_DashState(characterScript, characterScript.AimLine.GetPosition(0), characterScript.AimLine.GetPosition(1)));
     }
 
 }
