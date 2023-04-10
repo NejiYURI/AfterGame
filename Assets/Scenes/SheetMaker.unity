@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aee4555a4f0e782449556a4d0636ea02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 89be404bedddee24f82b5df396f5e877, type: 3}
+  clip: {fileID: 8300000, guid: 80d37bf501ed3be45adf8ec28796f934, type: 3}
   MoveObj: {fileID: 1809871058}
   spawnSheetPoint: {fileID: 8146815213830725999, guid: f254f17898aff2549aabee6f1f10d835, type: 3}
   Obj_1: {fileID: 0}
@@ -263,9 +263,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: e53df31afd879884dbbbfaa42f162b6a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.666
+  m_Volume: 0.129
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -429,6 +429,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e8928bf0-1c4d-4a34-b9b1-4026e3d48b8c
     m_ActionName: SheetMaker/Slash[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b5965206-3572-45a0-bf5a-dcdf32ba5111
+    m_ActionName: Aiming/Slash[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: SheetMaker

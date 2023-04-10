@@ -23,7 +23,6 @@ public class MusicReader : MonoBehaviour
     private float LastRms;
     [SerializeField]
     private float LastPos;
-    private bool WaitForLow;
     [SerializeField]
     private List<SheetData> sheets;
     [SerializeField]
@@ -122,8 +121,6 @@ public class MusicReader : MonoBehaviour
     }
     IEnumerator WaitTimer()
     {
-        WaitForLow = true;
         yield return new WaitForSeconds(0.4f);
-        WaitForLow = false;
     }
 }

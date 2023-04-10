@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStateMachine : MonoBehaviour
+namespace NormalGame
 {
-    protected PlayerState State;
-    public void SetState(PlayerState _state)
+    public class PlayerStateMachine : MonoBehaviour
     {
-        State = _state;
-        State.StateStart();
+        protected PlayerState State;
+        public void SetState(PlayerState _state)
+        {
+            State = _state;
+            State.StateStart();
+        }
     }
 }

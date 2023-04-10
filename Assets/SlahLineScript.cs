@@ -13,7 +13,11 @@ public class SlahLineScript : MonoBehaviour
     private void Start()
     {
         enemies = new List<EnemyScript>();
-        if (GameEventManager.instance) GameEventManager.instance.DealDamage.AddListener(DealDamage);
+        if (GameEventManager.instance)
+        {
+            GameEventManager.instance.DealDamage.AddListener(DealDamage);
+            GameEventManager.instance.DamageFalied.AddListener(DestoryObj);
+        }
     }
     public void SetLineRender(Vector2 Start, Vector2 End)
     {
@@ -52,8 +56,14 @@ public class SlahLineScript : MonoBehaviour
     {
         foreach (var item in enemies)
         {
+            item.DisableMove();
             item.GetDamage(1);
         }
+        DestoryObj();
+    }
+
+    void DestoryObj()
+    {
         if (GameEventManager.instance) GameEventManager.instance.DealDamage.RemoveListener(DealDamage);
         Destroy(gameObject);
     }

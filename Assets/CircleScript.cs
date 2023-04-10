@@ -9,12 +9,12 @@ public class CircleScript : MonoBehaviour
     {
         this.transform.localScale = Vector2.one;
         this.transform.LeanScale(Vector2.zero, 1f);
-        Destroy(gameObject,1.5f);
+        Destroy(gameObject,1f);
     }
 
     // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        if (BeatController.instance) BeatController.instance.RemoveBeat(this.gameObject);
     }
 }

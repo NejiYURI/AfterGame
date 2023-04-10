@@ -1,32 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class PlayerState
+namespace NormalGame
 {
-    protected MainCharacterScript characterScript;
-    public PlayerState(MainCharacterScript _characterScript)
+    public class PlayerState
     {
-        this.characterScript = _characterScript;
+        protected MainCharacterScript characterScript;
+        public PlayerState(MainCharacterScript _characterScript)
+        {
+            this.characterScript = _characterScript;
+        }
+
+        public virtual void StateStart()
+        {
+
+        }
+
+        public virtual void StateEnd()
+        {
+
+        }
+
+        public virtual void UpdateFunc()
+        {
+
+        }
+
+        public virtual void MouseClick()
+        {
+
+        }
     }
 
-    public virtual void StateStart()
-    {
-
-    }
-
-    public virtual void StateEnd()
-    {
-
-    }
-
-    public virtual void UpdateFunc()
-    {
-
-    }
-
-    public virtual void MouseClick()
-    {
-
-    }
 }

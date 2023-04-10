@@ -14,8 +14,13 @@ public class GameEventManager : MonoBehaviour
     public UnityEvent<bool> ActionStart;
 
     public UnityEvent DealDamage;
+    public UnityEvent DamageFalied;
 
     public UnityEvent SpawnBeat;
 
     public UnityEvent SpawnSlash;
+
+    public UnityEvent EnemyDead;
+
+    public UnityEvent BeatOver;
 }

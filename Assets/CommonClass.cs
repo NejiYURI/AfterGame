@@ -30,3 +30,17 @@ public class SheetGroup
     public string ID;
     public List<SheetData> Groups;
 }
+
+[System.Serializable]
+public class BeatData
+{
+    public BeatData(GameObject obj, bool isSlash)
+    {
+        this.Obj = obj;
+        this.IsSlash = isSlash;
+    }
+
+    public GameObject Obj;
+    public bool IsSlash;
+    public bool IsUsed;
+}
