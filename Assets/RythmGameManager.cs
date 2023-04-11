@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Mono.Cecil;
 
 public class RythmGameManager : MonoBehaviour
 {
@@ -86,7 +87,7 @@ public class RythmGameManager : MonoBehaviour
     {
         if (musicPlayer.isPlaying && sheetDatas.Count > 0)
         {
-            if (sheetDatas[0].position - musicPlayer.time <= 1)
+            while (sheetDatas.Count > 0 && sheetDatas[0].position - musicPlayer.time <= 1)
             {
                 Beat_Index = sheetDatas[0].ID;
                 if (GameEventManager.instance)
@@ -241,7 +242,7 @@ public class RythmGameManager : MonoBehaviour
         while (t_cnt < 1)
         {
             t_cnt += Time.deltaTime;
-            musicPlayer.pitch -= Time.deltaTime*0.9f;
+            musicPlayer.pitch -= Time.deltaTime * 0.9f;
             yield return null;
         }
         musicPlayer.Stop();
@@ -259,10 +260,10 @@ public class RythmGameManager : MonoBehaviour
 
     public void ShowBeatResult(bool IsSuccess)
     {
-        SpawnTxt(IsSuccess?"Great!":"Miss!", MouseObj.position,IsSuccess);
+        SpawnTxt(IsSuccess ? "Great!" : "Miss!", MouseObj.position, IsSuccess);
     }
 
-    void SpawnTxt(string _desc, Vector2 _pos,bool Success)
+    void SpawnTxt(string _desc, Vector2 _pos, bool Success)
     {
         Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(_pos);
 
@@ -277,7 +278,7 @@ public class RythmGameManager : MonoBehaviour
             rect.localScale = Vector2.one;
             rect.anchoredPosition = WorldObject_ScreenPosition;
             _txt.text = _desc;
-            _txt.color=Success? Color.green : Color.red;
+            _txt.color = Success ? Color.green : Color.red;
         }
         Destroy(_obj, 0.3f);
     }
