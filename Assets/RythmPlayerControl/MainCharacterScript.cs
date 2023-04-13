@@ -14,6 +14,8 @@ namespace RythmGame
         public float minDistance;
         public float MaxDistance;
 
+        public AudioClip MoveSound;
+
         [SerializeField]
         private Vector2 MousePos;
 

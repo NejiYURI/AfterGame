@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lR: {fileID: 8917755782454162962}
   polygonCollider: {fileID: -3861271734283840456}
+  width: 0.2
 --- !u!120 &8917755782454162962
 LineRenderer:
   m_ObjectHideFlags: 0

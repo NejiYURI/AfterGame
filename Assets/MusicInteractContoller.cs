@@ -38,7 +38,7 @@ public class MusicInteractContoller : MonoBehaviour
 
     float GetRF(float Target)
     {
-        return (float)System.Math.Round((decimal)Target, 2);
+        return (float)System.Math.Round((decimal)Target, 4);
     }
 
     public float GetRatio()

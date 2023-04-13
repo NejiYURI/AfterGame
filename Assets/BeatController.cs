@@ -42,7 +42,6 @@ public class BeatController : MonoBehaviour
 
             if (!rslt.IsUsed)
             {
-                Debug.Log("Miss");
                 if (RythmGameManager.instance) RythmGameManager.instance.ShowBeatResult(false);
                 if (GameEventManager.instance) GameEventManager.instance.BeatOver.Invoke();
                 if (rslt.IsSlash && GameEventManager.instance) GameEventManager.instance.DamageFalied.Invoke();

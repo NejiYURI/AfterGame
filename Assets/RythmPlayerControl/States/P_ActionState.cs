@@ -32,6 +32,7 @@ namespace RythmGame
             {
                 if (BeatController.instance.BeatCorrect(false))
                 {
+                    if (AudioController.instance) AudioController.instance.PlaySound(characterScript.MoveSound);
                     characterScript.SetState(new P_DashState(characterScript, characterScript.AimLine.GetPosition(0), characterScript.AimLine.GetPosition(1)));
                 }
             }

@@ -7,6 +7,7 @@ public class SlahLineScript : MonoBehaviour
     public LineRenderer lR;
 
     public PolygonCollider2D polygonCollider;
+    public float width = 0.1f;
     private List<EnemyScript> enemies;
 
     //public EdgeCollider2D edgeCollider;
@@ -33,7 +34,7 @@ public class SlahLineScript : MonoBehaviour
     {
         Vector3[] positions = new Vector3[lR.positionCount];
         lR.GetPositions(positions);
-        float width = 0.1f;
+
 
         float m = (positions[2].x - positions[0].x) != 0 ? (positions[2].y - positions[0].y) / (positions[2].x - positions[0].x) : 1f;
         float dx = (width / 2f) * (m / Mathf.Pow(m * m + 1, 0.5f));
