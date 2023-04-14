@@ -222,7 +222,7 @@ public class RythmGameManager : MonoBehaviour
     public void PlayerGetDamage()
     {
         Debug.Log("GetDamage");
-        PlayerHealth = Mathf.Clamp(PlayerHealth--, 0, 100);
+        PlayerHealth = Mathf.Clamp(PlayerHealth-1, 0, 100);
         if (HealthTxt != null) HealthTxt.text = PlayerHealth.ToString();
         if (PlayerHealth <= 0) GameOver();
     }

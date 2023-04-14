@@ -6,8 +6,8 @@ public class RythmColor : MonoBehaviour
 {
     public Color minColor;
     public Color maxColor;
-    public float minSize;
-    public float MaxSIze;
+    public float minSize=5;
+    public float MaxSIze=5;
 
     public Camera cam;
     void Update()
