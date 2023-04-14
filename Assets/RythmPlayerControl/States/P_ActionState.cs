@@ -47,7 +47,11 @@ namespace RythmGame
         {
             if (BeatController.instance)
             {
-                if (BeatController.instance.BeatCorrect(true)) if (GameEventManager.instance) GameEventManager.instance.DealDamage.Invoke();
+                if (BeatController.instance.BeatCorrect(true))
+                {
+                    if (AudioController.instance) AudioController.instance.PlaySound(characterScript.MoveSound);
+                    if (GameEventManager.instance) GameEventManager.instance.DealDamage.Invoke();
+                }
             }
             else
             {

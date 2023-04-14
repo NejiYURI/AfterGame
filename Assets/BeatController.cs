@@ -7,11 +7,14 @@ public class BeatController : MonoBehaviour
 {
     public static BeatController instance;
 
+    public AudioClip KillSound;
     public GameObject BeatCircle;
     public GameObject SlashCircle;
 
     [SerializeField]
     private List<BeatData> Beats;
+
+    private int EnemySlashedCount;
 
     public Transform MousePos;
 
@@ -25,6 +28,7 @@ public class BeatController : MonoBehaviour
     private void Start()
     {
         Beats = new List<BeatData>();
+        EnemySlashedCount = 0;
         if (GameEventManager.instance)
         {
             GameEventManager.instance.SpawnBeat.AddListener(SpawnBeat);
@@ -61,6 +65,12 @@ public class BeatController : MonoBehaviour
         Beats[0].IsUsed = true;
         Destroy(Beats[0].Obj);
         Beats.RemoveAt(0);
+        if (Rslt && IsSlash && EnemySlashedCount > 0)
+        {
+            if (AudioController.instance)
+                StartCoroutine(playsound());
+            EnemySlashedCount = 0;
+        }
         if (RythmGameManager.instance) RythmGameManager.instance.ShowBeatResult(Rslt);
         if (GameEventManager.instance) GameEventManager.instance.BeatOver.Invoke();
         return Rslt;
@@ -76,5 +86,16 @@ public class BeatController : MonoBehaviour
     void SpawnSlash()
     {
         Beats.Add(new BeatData(Instantiate(SlashCircle, MousePos), true));
+    }
+
+    public void EnemySlashed()
+    {
+        EnemySlashedCount++;
+    }
+
+    IEnumerator playsound()
+    {
+        yield return new WaitForSeconds(0.05f);
+        AudioController.instance.PlaySound(KillSound);
     }
 }

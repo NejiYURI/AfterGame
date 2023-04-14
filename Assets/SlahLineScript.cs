@@ -74,6 +74,7 @@ public class SlahLineScript : MonoBehaviour
         if (collision.tag.Equals("Enemy"))
         {
            if(collision.GetComponent<EnemyScript>()) enemies.Add(collision.GetComponent<EnemyScript>());
+            if (BeatController.instance) BeatController.instance.EnemySlashed();
         }
       
     }

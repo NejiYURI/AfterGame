@@ -1954,6 +1954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb0ad68341681ee4eb7112308bbf340d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KillSound: {fileID: 8300000, guid: 91b550c8389852b4d9e147f8187f8b65, type: 3}
   BeatCircle: {fileID: 2652667431885030145, guid: 01bbc26f2736f3e4d801639963ecaf27, type: 3}
   SlashCircle: {fileID: 2652667431885030145, guid: 86eec1ea463d8524589db0aa81bcf72f, type: 3}
   Beats: []
@@ -2671,7 +2672,7 @@ PrefabInstance:
     - target: {fileID: 1289396617448479431, guid: 7432fc7448e825642af41607246aa61f, type: 3}
       propertyPath: MoveSound
       value: 
-      objectReference: {fileID: 8300000, guid: 3d2dc9edad42ca94eb82ef5a2aef88b4, type: 3}
+      objectReference: {fileID: 8300000, guid: b0fb3e2f430b27541b598e2d47492dbd, type: 3}
     - target: {fileID: 1289396617448479481, guid: 7432fc7448e825642af41607246aa61f, type: 3}
       propertyPath: m_Name
       value: MainChar
