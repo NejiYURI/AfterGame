@@ -607,6 +607,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minColor: {r: 0.27450982, g: 0.27450982, b: 0.27450982, a: 0}
   maxColor: {r: 0.25490198, g: 0.25490198, b: 0.25490198, a: 0}
+  minSize: 5
+  MaxSIze: 4.9
   cam: {fileID: 519420031}
 --- !u!1 &537133280
 GameObject:
@@ -1451,6 +1453,7 @@ MonoBehaviour:
   SlashLine: {fileID: 8917755782454162958, guid: b8177b73021512c4eb9de85b840f93d4, type: 3}
   minDistance: 1.5
   MaxDistance: 4
+  MoveSound: {fileID: 0}
   MousePos: {x: 0, y: 0}
 --- !u!58 &830386084
 CircleCollider2D:

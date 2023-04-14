@@ -203,9 +203,9 @@ public class RythmGameManager : MonoBehaviour
             do
             {
                 randIndex = Random.Range(0, SpawnPoints.Count);
-            } while (Vector2.Distance(SpawnPoints[randIndex].position, this.PlayerObj.transform.position)<=2f);
+            } while (Vector2.Distance(SpawnPoints[randIndex].position, this.PlayerObj.transform.position) <= 2f);
 
-             Vector2 s_Pos = SpawnPoints[randIndex].position;
+            Vector2 s_Pos = SpawnPoints[randIndex].position;
             //Vector2 s_Pos = new Vector2(Random.Range(-SpawnX, SpawnX), Random.Range(-SpawnY, SpawnY));
             GameObject obj = Instantiate(enemy, s_Pos, Quaternion.identity);
             if (obj.GetComponent<EnemyScript>()) obj.GetComponent<EnemyScript>().MainTarget = this.PlayerObj.transform;
@@ -222,7 +222,7 @@ public class RythmGameManager : MonoBehaviour
     public void PlayerGetDamage()
     {
         Debug.Log("GetDamage");
-        PlayerHealth--;
+        PlayerHealth = Mathf.Clamp(PlayerHealth--, 0, 100);
         if (HealthTxt != null) HealthTxt.text = PlayerHealth.ToString();
         if (PlayerHealth <= 0) GameOver();
     }
