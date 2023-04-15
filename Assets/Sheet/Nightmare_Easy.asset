@@ -15,6 +15,8 @@ MonoBehaviour:
   ID: 3
   MusicName: Nightmare
   Composer: Azari
+  SpawnFreq: 3
+  BeatTime: 2
   BKminColor: {r: 0.27450982, g: 0.23529412, b: 0.2363689, a: 0}
   BKmaxColor: {r: 0.27450982, g: 0.19607843, b: 0.20393334, a: 0}
   music: {fileID: 8300000, guid: 80d37bf501ed3be45adf8ec28796f934, type: 3}

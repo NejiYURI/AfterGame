@@ -382,7 +382,6 @@ MonoBehaviour:
   SlashLine: {fileID: 8917755782454162958, guid: b8177b73021512c4eb9de85b840f93d4, type: 3}
   minDistance: 1.5
   MaxDistance: 4
-  MoveSound: {fileID: 8300000, guid: b0fb3e2f430b27541b598e2d47492dbd, type: 3}
   MousePos: {x: 0, y: 0}
 --- !u!120 &1289396617448479482
 LineRenderer:

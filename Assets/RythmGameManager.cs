@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using Mono.Cecil;
 
 public class RythmGameManager : MonoBehaviour
 {
@@ -28,6 +27,7 @@ public class RythmGameManager : MonoBehaviour
     public int PlayerHealth;
 
     public float SpawnFreq = 0.5f;
+    public float BeatTime=1f;
 
     public GameObject enemy;
 
@@ -37,6 +37,12 @@ public class RythmGameManager : MonoBehaviour
     public float SpawnY;
 
     private AudioSource musicPlayer;
+    public List<AudioClip> MoveSound;
+    public AudioClip SlashSound;
+    public AudioClip MissSound;
+    public AudioClip KillSound;
+
+
 
     private List<SheetData> sheetDatas;
     private List<SheetData> sheetDatasCount;
@@ -45,16 +51,23 @@ public class RythmGameManager : MonoBehaviour
 
     private string Beat_Index;
 
+    private int EnemySlashedCount;
+    private int Score;
+
     private RectTransform CanvasRect;
     public TextMeshProUGUI SlashRemain;
     public TextMeshProUGUI HealthTxt;
     public TextMeshProUGUI GameOverLabel;
     public TextMeshProUGUI SongDetailTxt;
+    public TextMeshProUGUI ScoreTxt;
     private void Start()
     {
         musicPlayer = GetComponent<AudioSource>();
         GameOverPanel.SetActive(false);
         CanvasRect = MainCanvas.GetComponent<RectTransform>();
+        EnemySlashedCount = 0;
+        Score = 0;
+        AddScore(0);
         if (HealthTxt != null) HealthTxt.text = PlayerHealth.ToString();
         for (int i = 0; i < EnemyStartNum; i++)
         {
@@ -71,12 +84,14 @@ public class RythmGameManager : MonoBehaviour
     void ReadData()
     {
         if (GameSettingScript.instance) musicSheet = GameSettingScript.instance.Sheet;
-       
+
         musicPlayer.clip = musicSheet.music;
         sheetDatas = new List<SheetData>();
         sheetDatasCount = new List<SheetData>();
         sheetDatas.AddRange(musicSheet.sheetDatas);
         sheetDatasCount.AddRange(musicSheet.sheetDatas);
+        this.BeatTime = musicSheet.BeatTime;
+        this.SpawnFreq = musicSheet.SpawnFreq;
         if (SlashRemain != null) SlashRemain.text = GetDisToNextSlash().ToString();
         if (SongDetailTxt != null) SongDetailTxt.text = musicSheet.MusicName + " - " + musicSheet.Composer;
         StartCoroutine(GameStartCountDown());
@@ -101,11 +116,12 @@ public class RythmGameManager : MonoBehaviour
     {
         if (musicPlayer.isPlaying && sheetDatas.Count > 0)
         {
-            while (sheetDatas.Count > 0 && sheetDatas[0].position - musicPlayer.time <= 2)
+            while (sheetDatas.Count > 0 && sheetDatas[0].position - musicPlayer.time <= this.BeatTime)
             {
                 Beat_Index = sheetDatas[0].ID;
                 if (GameEventManager.instance)
                 {
+
                     if (sheetDatas[0].IsEnd)
                         GameEventManager.instance.SpawnSlash.Invoke();
                     else
@@ -215,7 +231,7 @@ public class RythmGameManager : MonoBehaviour
         return -1;
     }
 
-    void SpawnEnemy()
+    public void SpawnEnemy()
     {
         if (enemy != null && SpawnPoints.Count > 0 && PlayerObj)
         {
@@ -242,7 +258,7 @@ public class RythmGameManager : MonoBehaviour
     public void PlayerGetDamage()
     {
         Debug.Log("GetDamage");
-        PlayerHealth = Mathf.Clamp(PlayerHealth-1, 0, 100);
+        PlayerHealth = Mathf.Clamp(PlayerHealth - 1, 0, 100);
         if (HealthTxt != null) HealthTxt.text = PlayerHealth.ToString();
         if (PlayerHealth <= 0) GameOver();
     }
@@ -284,8 +300,24 @@ public class RythmGameManager : MonoBehaviour
         SceneManager.LoadScene("Title");
     }
 
-    public void ShowBeatResult(bool IsSuccess)
+    public void ShowBeatResult(bool IsSuccess, bool IsSlash)
     {
+        if (!IsSuccess && AudioController.instance) AudioController.instance.PlaySound(MissSound);
+        if (IsSuccess)
+        {
+            if (IsSlash)
+            {
+                PlaySlashSound();
+                if (IsSlash && EnemySlashedCount > 0)
+                {
+                    if (AudioController.instance)
+                        StartCoroutine(playkillsound());
+                }
+            }
+            else PlayMoveSound();
+            AddScore(100);
+        }
+        if (IsSlash) EnemySlashedCount = 0;
         SpawnTxt(IsSuccess ? "Great!" : "Miss!", MouseObj.position, IsSuccess);
     }
 
@@ -314,5 +346,40 @@ public class RythmGameManager : MonoBehaviour
         float Xpos = (_VP.x * CanvasRect.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f);
         float YPos = (_VP.y * CanvasRect.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f);
         return new Vector2(Xpos, YPos);
+    }
+
+    public void PlayMoveSound()
+    {
+        if (AudioController.instance && MoveSound.Count > 0) AudioController.instance.PlaySound(MoveSound[Random.Range(0, MoveSound.Count)]);
+    }
+
+    public void PlaySlashSound()
+    {
+        if (AudioController.instance) AudioController.instance.PlaySound(SlashSound);
+    }
+
+    IEnumerator playkillsound()
+    {
+        yield return new WaitForSeconds(0.1f);
+        AudioController.instance.PlaySound(KillSound);
+        yield return new WaitForSeconds(0.2f);
+        if (RythmGameManager.instance) RythmGameManager.instance.SpawnEnemy();
+    }
+
+    void AddScore(int amount)
+    {
+        Score += amount;
+        if(amount>0 && GameEventManager.instance) GameEventManager.instance.AddScore.Invoke();
+        if (ScoreTxt) ScoreTxt.text = Score.ToString("00000");
+    }
+
+    public void AddEnemyScore()
+    {
+        AddScore(150);
+    }
+
+    public void EnemySlashed()
+    {
+        EnemySlashedCount++;
     }
 }

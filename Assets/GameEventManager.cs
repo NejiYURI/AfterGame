@@ -23,4 +23,8 @@ public class GameEventManager : MonoBehaviour
     public UnityEvent EnemyDead;
 
     public UnityEvent BeatOver;
+
+    public UnityEvent GameOver;
+
+    public UnityEvent AddScore;
 }

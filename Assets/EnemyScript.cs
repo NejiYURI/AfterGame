@@ -42,6 +42,7 @@ public class EnemyScript : MonoBehaviour
             GameEventManager.instance.DealDamage.RemoveListener(Movement);
             GameEventManager.instance.DamageFalied.RemoveListener(Movement);
         }
+        if (RythmGameManager.instance) RythmGameManager.instance.AddEnemyScore();
     }
 
     private void Movement()

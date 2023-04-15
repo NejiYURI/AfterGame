@@ -7,8 +7,8 @@ public class CircleScript : MonoBehaviour
     public float DeathTime = 1f;
     void Start()
     {
-        this.transform.localScale = Vector2.one;
-        this.transform.LeanScale(Vector2.zero * DeathTime + new Vector2(0.1f, 0.1f), DeathTime);
+        this.transform.localScale = Vector2.one + new Vector2(0.1f, 0.1f);
+        this.transform.LeanScale(Vector2.zero + new Vector2(0.1f, 0.1f), DeathTime);
         Destroy(gameObject, DeathTime);
     }
 

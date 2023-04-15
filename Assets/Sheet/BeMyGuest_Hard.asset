@@ -15,6 +15,8 @@ MonoBehaviour:
   ID: 2
   MusicName: BeMyGuest
   Composer: Azari
+  SpawnFreq: 1
+  BeatTime: 1.5
   BKminColor: {r: 0.23529412, g: 0.23529412, b: 0.27450982, a: 0}
   BKmaxColor: {r: 0.19607843, g: 0.19607843, b: 0.27450982, a: 0}
   music: {fileID: 8300000, guid: 4244e4efaf2e52a40bba4c44fafcb5df, type: 3}

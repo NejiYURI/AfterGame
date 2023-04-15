@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoundTester : MonoBehaviour
 {
-    public AudioClip audio;
+    public AudioClip TargetAudio;
     public float Freq;
     void Start()
     {
@@ -16,7 +16,7 @@ public class SoundTester : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(Freq);
-            if (AudioController.instance) AudioController.instance.PlaySound(audio);
+            if (AudioController.instance) AudioController.instance.PlaySound(TargetAudio);
         }
        
     }

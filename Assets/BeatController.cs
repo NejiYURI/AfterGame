@@ -7,16 +7,17 @@ public class BeatController : MonoBehaviour
 {
     public static BeatController instance;
 
-    public AudioClip KillSound;
     public GameObject BeatCircle;
     public GameObject SlashCircle;
 
     [SerializeField]
     private List<BeatData> Beats;
 
-    private int EnemySlashedCount;
+
 
     public Transform MousePos;
+
+    public float BeatTime = 1f;
 
 
 
@@ -28,12 +29,12 @@ public class BeatController : MonoBehaviour
     private void Start()
     {
         Beats = new List<BeatData>();
-        EnemySlashedCount = 0;
         if (GameEventManager.instance)
         {
             GameEventManager.instance.SpawnBeat.AddListener(SpawnBeat);
             GameEventManager.instance.SpawnSlash.AddListener(SpawnSlash);
         }
+        if (GameSettingScript.instance) BeatTime = GameSettingScript.instance.Sheet.BeatTime;
 
     }
 
@@ -46,7 +47,7 @@ public class BeatController : MonoBehaviour
 
             if (!rslt.IsUsed)
             {
-                if (RythmGameManager.instance) RythmGameManager.instance.ShowBeatResult(false);
+                if (RythmGameManager.instance) RythmGameManager.instance.ShowBeatResult(false, rslt.IsSlash);
                 if (GameEventManager.instance) GameEventManager.instance.BeatOver.Invoke();
                 if (rslt.IsSlash && GameEventManager.instance) GameEventManager.instance.DamageFalied.Invoke();
             }
@@ -59,19 +60,13 @@ public class BeatController : MonoBehaviour
     public bool BeatCorrect(bool IsSlash)
     {
         if (Beats.Count <= 0) return false;
-        if (Beats[0].Obj.transform.localScale.x >= 0.35f) return false;
-        bool Rslt = Beats[0].Obj.transform.localScale.x <= 0.25f && Beats[0].IsSlash == IsSlash;
+        if (Beats[0].Obj.transform.localScale.x >= 0.4f) return false;
+        bool Rslt = Beats[0].Obj.transform.localScale.x <= 0.3f && Beats[0].IsSlash == IsSlash;
         if (Beats[0].IsSlash && !Rslt && GameEventManager.instance) GameEventManager.instance.DamageFalied.Invoke();
         Beats[0].IsUsed = true;
         Destroy(Beats[0].Obj);
         Beats.RemoveAt(0);
-        if (Rslt && IsSlash && EnemySlashedCount > 0)
-        {
-            if (AudioController.instance)
-                StartCoroutine(playsound());
-            EnemySlashedCount = 0;
-        }
-        if (RythmGameManager.instance) RythmGameManager.instance.ShowBeatResult(Rslt);
+        if (RythmGameManager.instance) RythmGameManager.instance.ShowBeatResult(Rslt, IsSlash);
         if (GameEventManager.instance) GameEventManager.instance.BeatOver.Invoke();
         return Rslt;
     }
@@ -80,22 +75,22 @@ public class BeatController : MonoBehaviour
 
     void SpawnBeat()
     {
-        Beats.Add(new BeatData(Instantiate(BeatCircle, MousePos), false));
+        Beats.Add(new BeatData(SpawnCircle(BeatCircle), false));
     }
 
     void SpawnSlash()
     {
-        Beats.Add(new BeatData(Instantiate(SlashCircle, MousePos), true));
+       
+        Beats.Add(new BeatData(Instantiate(SpawnCircle(SlashCircle), MousePos), true));
     }
 
-    public void EnemySlashed()
+    GameObject SpawnCircle(GameObject _target)
     {
-        EnemySlashedCount++;
+        GameObject obj = Instantiate(_target, MousePos);
+        if (obj.GetComponent<CircleScript>()) obj.GetComponent<CircleScript>().DeathTime = BeatTime;
+        return obj;
     }
 
-    IEnumerator playsound()
-    {
-        yield return new WaitForSeconds(0.1f);
-        AudioController.instance.PlaySound(KillSound);
-    }
+
+
 }
