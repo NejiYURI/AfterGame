@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CircleScript : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float DeathTime = 1f;
     void Start()
     {
         this.transform.localScale = Vector2.one;
-        this.transform.LeanScale(Vector2.zero, 1f);
-        Destroy(gameObject,1f);
+        this.transform.LeanScale(Vector2.zero * DeathTime + new Vector2(0.1f, 0.1f), DeathTime);
+        Destroy(gameObject, DeathTime);
     }
 
     // Update is called once per frame

@@ -10,9 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ae28a921df620744bed312e9167f774, type: 3}
-  m_Name: NewSheet 4
+  m_Name: Nightmare_Easy
   m_EditorClassIdentifier: 
-  MusicName: 
+  ID: 3
+  MusicName: Nightmare
+  Composer: Azari
+  BKminColor: {r: 0.27450982, g: 0.23529412, b: 0.2363689, a: 0}
+  BKmaxColor: {r: 0.27450982, g: 0.19607843, b: 0.20393334, a: 0}
   music: {fileID: 8300000, guid: 80d37bf501ed3be45adf8ec28796f934, type: 3}
   sheetDatas:
   - ID: 0

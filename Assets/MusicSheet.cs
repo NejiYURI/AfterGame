@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class MusicSheet : ScriptableObject
 {
+    public string ID;
     public string MusicName;
+    public string Composer;
+    public Color BKminColor = Color.gray;
+    public Color BKmaxColor = Color.gray;
     public AudioClip music;
     public List<SheetData> sheetDatas;
 

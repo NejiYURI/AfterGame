@@ -10,6 +10,15 @@ public class RythmColor : MonoBehaviour
     public float MaxSIze=5;
 
     public Camera cam;
+    private void Start()
+    {
+        if (GameSettingScript.instance)
+        {
+            minColor = GameSettingScript.instance.Sheet.BKminColor;
+            maxColor= GameSettingScript.instance.Sheet.BKmaxColor;
+            cam.backgroundColor = minColor;
+        }
+    }
     void Update()
     {
         if (MusicInteractContoller.instance)

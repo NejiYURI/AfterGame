@@ -49,10 +49,13 @@ public class RythmGameManager : MonoBehaviour
     public TextMeshProUGUI SlashRemain;
     public TextMeshProUGUI HealthTxt;
     public TextMeshProUGUI GameOverLabel;
+    public TextMeshProUGUI SongDetailTxt;
     private void Start()
     {
         musicPlayer = GetComponent<AudioSource>();
-        PlayAudio();
+        GameOverPanel.SetActive(false);
+        CanvasRect = MainCanvas.GetComponent<RectTransform>();
+        if (HealthTxt != null) HealthTxt.text = PlayerHealth.ToString();
         for (int i = 0; i < EnemyStartNum; i++)
         {
             SpawnEnemy();
@@ -62,22 +65,33 @@ public class RythmGameManager : MonoBehaviour
             GameEventManager.instance.EnemyDead.AddListener(EnemyDead);
             GameEventManager.instance.BeatOver.AddListener(SetSlashNotice);
         }
-        CanvasRect = MainCanvas.GetComponent<RectTransform>();
-        StartCoroutine(EnemySpawnCounter());
+        ReadData();
+    }
+
+    void ReadData()
+    {
+        if (GameSettingScript.instance) musicSheet = GameSettingScript.instance.Sheet;
+       
+        musicPlayer.clip = musicSheet.music;
+        sheetDatas = new List<SheetData>();
+        sheetDatasCount = new List<SheetData>();
+        sheetDatas.AddRange(musicSheet.sheetDatas);
+        sheetDatasCount.AddRange(musicSheet.sheetDatas);
         if (SlashRemain != null) SlashRemain.text = GetDisToNextSlash().ToString();
-        if (HealthTxt != null) HealthTxt.text = PlayerHealth.ToString();
-        GameOverPanel.SetActive(false);
+        if (SongDetailTxt != null) SongDetailTxt.text = musicSheet.MusicName + " - " + musicSheet.Composer;
+        StartCoroutine(GameStartCountDown());
+    }
+
+    void GameStart()
+    {
+        PlayAudio();
+        StartCoroutine(EnemySpawnCounter());
     }
 
     public void PlayAudio()
     {
         if (musicSheet && musicPlayer)
         {
-            musicPlayer.clip = musicSheet.music;
-            sheetDatas = new List<SheetData>();
-            sheetDatasCount = new List<SheetData>();
-            sheetDatas.AddRange(musicSheet.sheetDatas);
-            sheetDatasCount.AddRange(musicSheet.sheetDatas);
             musicPlayer.Play();
             Invoke("GameClear", musicPlayer.clip.length);
         }
@@ -87,7 +101,7 @@ public class RythmGameManager : MonoBehaviour
     {
         if (musicPlayer.isPlaying && sheetDatas.Count > 0)
         {
-            while (sheetDatas.Count > 0 && sheetDatas[0].position - musicPlayer.time <= 1)
+            while (sheetDatas.Count > 0 && sheetDatas[0].position - musicPlayer.time <= 2)
             {
                 Beat_Index = sheetDatas[0].ID;
                 if (GameEventManager.instance)
@@ -181,6 +195,12 @@ public class RythmGameManager : MonoBehaviour
             }
         }
 
+    }
+
+    IEnumerator GameStartCountDown()
+    {
+        yield return new WaitForSeconds(3f);
+        GameStart();
     }
 
     private int GetDisToNextSlash()

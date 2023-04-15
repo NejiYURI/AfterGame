@@ -10,9 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ae28a921df620744bed312e9167f774, type: 3}
-  m_Name: NewSheet 3
+  m_Name: BeMyGuest_Easy
   m_EditorClassIdentifier: 
-  MusicName: 
+  ID: 1
+  MusicName: BeMyGuest
+  Composer: Azari
+  BKminColor: {r: 0.23529412, g: 0.23529412, b: 0.27450982, a: 0}
+  BKmaxColor: {r: 0.19607843, g: 0.19607843, b: 0.27450982, a: 0}
   music: {fileID: 8300000, guid: 89be404bedddee24f82b5df396f5e877, type: 3}
   sheetDatas:
   - ID: 0

@@ -59,7 +59,7 @@ public class BeatController : MonoBehaviour
     public bool BeatCorrect(bool IsSlash)
     {
         if (Beats.Count <= 0) return false;
-        if (Beats[0].Obj.transform.localScale.x >= 0.6f) return false;
+        if (Beats[0].Obj.transform.localScale.x >= 0.35f) return false;
         bool Rslt = Beats[0].Obj.transform.localScale.x <= 0.25f && Beats[0].IsSlash == IsSlash;
         if (Beats[0].IsSlash && !Rslt && GameEventManager.instance) GameEventManager.instance.DamageFalied.Invoke();
         Beats[0].IsUsed = true;
@@ -95,7 +95,7 @@ public class BeatController : MonoBehaviour
 
     IEnumerator playsound()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         AudioController.instance.PlaySound(KillSound);
     }
 }

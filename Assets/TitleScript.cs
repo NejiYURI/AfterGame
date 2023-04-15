@@ -5,8 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class TitleScript : MonoBehaviour
 {
-    public void LoadScene(string SceneName)
+    public List<MusicSheet> musicSheets;
+
+    private Dictionary<string, MusicSheet> sheetDictionary;
+    private void Start()
     {
-        SceneManager.LoadScene(SceneName);
+        sheetDictionary=new Dictionary<string, MusicSheet>();
+        foreach (var item in musicSheets)
+        {
+            sheetDictionary.Add(item.ID, item);
+        }
+    }
+    public void LoadScene(string MusicID)
+    {
+        if (sheetDictionary.ContainsKey(MusicID))
+        {
+            if (GameSettingScript.instance) GameSettingScript.instance.Sheet = sheetDictionary[MusicID];
+            SceneManager.LoadScene("RythmGame");
+        }
+        
     }
 }

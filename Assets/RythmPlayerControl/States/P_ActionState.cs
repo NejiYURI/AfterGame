@@ -32,7 +32,7 @@ namespace RythmGame
             {
                 if (BeatController.instance.BeatCorrect(false))
                 {
-                    if (AudioController.instance) AudioController.instance.PlaySound(characterScript.MoveSound);
+                    characterScript.PlayMoveSound();
                     characterScript.SetState(new P_DashState(characterScript, characterScript.AimLine.GetPosition(0), characterScript.AimLine.GetPosition(1)));
                 }
             }
@@ -49,7 +49,7 @@ namespace RythmGame
             {
                 if (BeatController.instance.BeatCorrect(true))
                 {
-                    if (AudioController.instance) AudioController.instance.PlaySound(characterScript.MoveSound);
+                    characterScript.PlaySlashSound();
                     if (GameEventManager.instance) GameEventManager.instance.DealDamage.Invoke();
                 }
             }

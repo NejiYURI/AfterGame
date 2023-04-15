@@ -14,7 +14,8 @@ namespace RythmGame
         public float minDistance;
         public float MaxDistance;
 
-        public AudioClip MoveSound;
+        public List<AudioClip> MoveSound;
+        public AudioClip SlashSound;
 
         [SerializeField]
         private Vector2 MousePos;
@@ -71,6 +72,15 @@ namespace RythmGame
         }
 
 
+        public void PlayMoveSound()
+        {
+            if (AudioController.instance && MoveSound.Count>0) AudioController.instance.PlaySound(MoveSound[Random.Range(0, MoveSound.Count)]);
+        }
+
+        public void PlaySlashSound()
+        {
+            if (AudioController.instance) AudioController.instance.PlaySound(SlashSound);
+        }
 
     }
 }
