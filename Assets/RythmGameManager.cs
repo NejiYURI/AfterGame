@@ -27,7 +27,7 @@ public class RythmGameManager : MonoBehaviour
     public int PlayerHealth;
 
     public float SpawnFreq = 0.5f;
-    public float BeatTime=1f;
+    public float BeatTime = 1f;
 
     public GameObject enemy;
 
@@ -37,12 +37,6 @@ public class RythmGameManager : MonoBehaviour
     public float SpawnY;
 
     private AudioSource musicPlayer;
-    public List<AudioClip> MoveSound;
-    public AudioClip SlashSound;
-    public AudioClip MissSound;
-    public AudioClip KillSound;
-
-
 
     private List<SheetData> sheetDatas;
     private List<SheetData> sheetDatasCount;
@@ -54,16 +48,21 @@ public class RythmGameManager : MonoBehaviour
     private int EnemySlashedCount;
     private int Score;
 
+    private bool IsGameOver;
+    private bool IsDamaged;
+
     private RectTransform CanvasRect;
     public TextMeshProUGUI SlashRemain;
     public TextMeshProUGUI HealthTxt;
     public TextMeshProUGUI GameOverLabel;
     public TextMeshProUGUI SongDetailTxt;
     public TextMeshProUGUI ScoreTxt;
+
+    public bool BeatDebug;
     private void Start()
     {
         musicPlayer = GetComponent<AudioSource>();
-        GameOverPanel.SetActive(false);
+        if (GameOverPanel) GameOverPanel.SetActive(false);
         CanvasRect = MainCanvas.GetComponent<RectTransform>();
         EnemySlashedCount = 0;
         Score = 0;
@@ -77,6 +76,8 @@ public class RythmGameManager : MonoBehaviour
         {
             GameEventManager.instance.EnemyDead.AddListener(EnemyDead);
             GameEventManager.instance.BeatOver.AddListener(SetSlashNotice);
+            GameEventManager.instance.BeatResult.AddListener(ShowBeatResult);
+            GameEventManager.instance.EnemySlashed.AddListener(EnemySlashed);
         }
         ReadData();
     }
@@ -130,6 +131,11 @@ public class RythmGameManager : MonoBehaviour
                 sheetDatas.RemoveAt(0);
 
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ReturnToTitle();
         }
     }
 
@@ -197,7 +203,8 @@ public class RythmGameManager : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.Label(new Rect(0, 0, 100, 50), Beat_Index);
+        if (BeatDebug)
+            GUI.Label(new Rect(0, 0, 100, 50), Beat_Index);
     }
 
     IEnumerator EnemySpawnCounter()
@@ -239,7 +246,7 @@ public class RythmGameManager : MonoBehaviour
             do
             {
                 randIndex = Random.Range(0, SpawnPoints.Count);
-            } while (Vector2.Distance(SpawnPoints[randIndex].position, this.PlayerObj.transform.position) <= 2f);
+            } while (Vector2.Distance(SpawnPoints[randIndex].position, this.PlayerObj.transform.position) <= 3f);
 
             Vector2 s_Pos = SpawnPoints[randIndex].position;
             //Vector2 s_Pos = new Vector2(Random.Range(-SpawnX, SpawnX), Random.Range(-SpawnY, SpawnY));
@@ -257,14 +264,24 @@ public class RythmGameManager : MonoBehaviour
 
     public void PlayerGetDamage()
     {
+        if (IsDamaged) return;
+        StartCoroutine(InvisibleTime());
         Debug.Log("GetDamage");
+        if (GameEventManager.instance) GameEventManager.instance.PlayerDamage.Invoke();
         PlayerHealth = Mathf.Clamp(PlayerHealth - 1, 0, 100);
         if (HealthTxt != null) HealthTxt.text = PlayerHealth.ToString();
         if (PlayerHealth <= 0) GameOver();
     }
+    IEnumerator InvisibleTime()
+    {
+        IsDamaged = true;
+        yield return new WaitForSeconds(0.5f);
+        IsDamaged = false;
+    }
 
     void GameClear()
     {
+        if (IsGameOver) return;
         StopAllCoroutines();
         GameOverLabel.text = "Clear";
         GameOverPanel.SetActive(true);
@@ -272,7 +289,9 @@ public class RythmGameManager : MonoBehaviour
 
     public void GameOver()
     {
+        IsGameOver = true;
         StopAllCoroutines();
+        if (GameEventManager.instance) GameEventManager.instance.GameOver.Invoke();
         GameOverLabel.text = "Failed";
         GameOverPanel.SetActive(true);
         StartCoroutine(GameOverTimer());
@@ -302,19 +321,13 @@ public class RythmGameManager : MonoBehaviour
 
     public void ShowBeatResult(bool IsSuccess, bool IsSlash)
     {
-        if (!IsSuccess && AudioController.instance) AudioController.instance.PlaySound(MissSound);
+        if (!IsSuccess && GameEventManager.instance) GameEventManager.instance.BeatMiss.Invoke();
         if (IsSuccess)
         {
             if (IsSlash)
             {
-                PlaySlashSound();
-                if (IsSlash && EnemySlashedCount > 0)
-                {
-                    if (AudioController.instance)
-                        StartCoroutine(playkillsound());
-                }
+                if (GameEventManager.instance) GameEventManager.instance.DamageAction.Invoke(EnemySlashedCount > 0);
             }
-            else PlayMoveSound();
             AddScore(100);
         }
         if (IsSlash) EnemySlashedCount = 0;
@@ -348,28 +361,10 @@ public class RythmGameManager : MonoBehaviour
         return new Vector2(Xpos, YPos);
     }
 
-    public void PlayMoveSound()
-    {
-        if (AudioController.instance && MoveSound.Count > 0) AudioController.instance.PlaySound(MoveSound[Random.Range(0, MoveSound.Count)]);
-    }
-
-    public void PlaySlashSound()
-    {
-        if (AudioController.instance) AudioController.instance.PlaySound(SlashSound);
-    }
-
-    IEnumerator playkillsound()
-    {
-        yield return new WaitForSeconds(0.1f);
-        AudioController.instance.PlaySound(KillSound);
-        yield return new WaitForSeconds(0.2f);
-        if (RythmGameManager.instance) RythmGameManager.instance.SpawnEnemy();
-    }
-
     void AddScore(int amount)
     {
         Score += amount;
-        if(amount>0 && GameEventManager.instance) GameEventManager.instance.AddScore.Invoke();
+        if (amount > 0 && GameEventManager.instance) GameEventManager.instance.AddScore.Invoke();
         if (ScoreTxt) ScoreTxt.text = Score.ToString("00000");
     }
 
@@ -381,5 +376,10 @@ public class RythmGameManager : MonoBehaviour
     public void EnemySlashed()
     {
         EnemySlashedCount++;
+    }
+
+    public void ReturnToTitle()
+    {
+        SceneManager.LoadScene("Title");
     }
 }

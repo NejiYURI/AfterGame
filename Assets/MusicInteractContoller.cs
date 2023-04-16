@@ -12,6 +12,7 @@ public class MusicInteractContoller : MonoBehaviour
 
     public AudioSource musicSource;
 
+    public float offset = 0f;
     [SerializeField]
     private float[] samples;
     [SerializeField]
@@ -32,7 +33,7 @@ public class MusicInteractContoller : MonoBehaviour
             {
                 sum += samples[i] * samples[i];
             }
-            Ratio = Mathf.Clamp(Mathf.Sqrt(sum / 1024)*10f,0f,1f);
+            Ratio = Mathf.Clamp(Mathf.Sqrt((sum+ offset) / 1024)*10f,0f,1f);
         }
     }
 

@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f141a493ac124d4fb4ea582a0e9b7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 0
+  MaxHealth: 1
   MoveDistance: 0.75
   MainTarget: {fileID: 0}
   DeathObj: {fileID: 413039173995848995, guid: 5898f913e59a5df44bd275b2603945fb, type: 3}

@@ -60,12 +60,24 @@ public class SlahLineScript : MonoBehaviour
             item.DisableMove();
             item.GetDamage(1);
         }
-        DestoryObj();
+
+        if (GameEventManager.instance)
+        {
+            GameEventManager.instance.DealDamage.RemoveListener(DealDamage);
+            GameEventManager.instance.DamageFalied.RemoveListener(DestoryObj);
+        }
+        this.polygonCollider.enabled = false;
+        StartCoroutine(SlashTimer());
+        //DestoryObj();
     }
 
     void DestoryObj()
     {
-        if (GameEventManager.instance) GameEventManager.instance.DealDamage.RemoveListener(DealDamage);
+        if (GameEventManager.instance)
+        {
+            GameEventManager.instance.DealDamage.RemoveListener(DealDamage);
+            GameEventManager.instance.DamageFalied.RemoveListener(DestoryObj);
+        }
         Destroy(gameObject);
     }
 
@@ -73,11 +85,28 @@ public class SlahLineScript : MonoBehaviour
     {
         if (collision.tag.Equals("Enemy"))
         {
-           if(collision.GetComponent<EnemyScript>()) enemies.Add(collision.GetComponent<EnemyScript>());
-            if (RythmGameManager.instance) RythmGameManager.instance.EnemySlashed();
+            if (collision.GetComponent<EnemyScript>()) enemies.Add(collision.GetComponent<EnemyScript>());
+            if (GameEventManager.instance) GameEventManager.instance.EnemySlashed.Invoke();
         }
-      
+
     }
 
+    IEnumerator SlashTimer()
+    {
+        lR.startColor = Color.red;
+        lR.endColor = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        Color n_color = Color.white;
+        n_color.a = Random.Range(0.005f, 0.03f);
+        float timer = 1;
+        while (timer > 0)
+        {
+            yield return null;
+            timer -= Time.deltaTime;
+            lR.startColor = Color.Lerp(n_color, Color.red, timer / 1f);
+            lR.endColor = Color.Lerp(n_color, Color.red, timer / 1f);
+        }
 
+
+    }
 }

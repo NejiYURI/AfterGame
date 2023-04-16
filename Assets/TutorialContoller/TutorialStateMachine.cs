@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MainGameNormal
+namespace Tutorial
 {
-    public class GameStateMachine : MonoBehaviour
+    public class TutorialStateMachine : MonoBehaviour
     {
         protected GameState State;
-
         public void SetState(GameState _state)
         {
             State = _state;

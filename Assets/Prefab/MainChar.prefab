@@ -75,8 +75,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278255360
+  m_fontColor: {r: 0, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -173,7 +173,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 1.192}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1289396616578681798
@@ -342,6 +342,7 @@ GameObject:
   - component: {fileID: 1289396617448479430}
   - component: {fileID: 1289396617448479424}
   - component: {fileID: 1289396617448479425}
+  - component: {fileID: 4876308422311292619}
   m_Layer: 0
   m_Name: MainChar
   m_TagString: Player
@@ -382,6 +383,16 @@ MonoBehaviour:
   SlashLine: {fileID: 8917755782454162958, guid: b8177b73021512c4eb9de85b840f93d4, type: 3}
   minDistance: 1.5
   MaxDistance: 4
+  CharacterSprite: {fileID: 1289396617652960991}
+  inputControl: {fileID: 1289396617448479430}
+  MoveSound:
+  - {fileID: 8300000, guid: 1378e8f5b8bfcaa4bb21926a28d629e0, type: 3}
+  - {fileID: 8300000, guid: 1d69b29475d5fde48b79e60a68381d35, type: 3}
+  - {fileID: 8300000, guid: 0a2c7f5daf256a749a6b083ec42f48bf, type: 3}
+  - {fileID: 8300000, guid: 40280b2d0cf7f7a49bf5f69e75a7f89d, type: 3}
+  SlashSound: {fileID: 8300000, guid: 9864c0f5c0421c04d998d64803ba1be4, type: 3}
+  MissSound: {fileID: 8300000, guid: 9357f6a4b1588f849984c53b419a6ccb, type: 3}
+  KillSound: {fileID: 8300000, guid: 91b550c8389852b4d9e147f8187f8b65, type: 3}
   MousePos: {x: 0, y: 0}
 --- !u!120 &1289396617448479482
 LineRenderer:
@@ -614,6 +625,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &4876308422311292619
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289396617448479481}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d8ccc442112ebbd44be2b392b8f0cbc6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1289396617652960989
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,7 +671,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289396617652960989}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -688,7 +719,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2074166901, guid: 05ac78dc1d564d34eb743049608eef73, type: 3}
+  m_Sprite: {fileID: 826979157, guid: 40104b4713cee424abe7617f569868a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

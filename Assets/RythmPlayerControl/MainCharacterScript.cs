@@ -14,6 +14,15 @@ namespace RythmGame
         public float minDistance;
         public float MaxDistance;
 
+        public SpriteRenderer CharacterSprite;
+        private Animator animator;
+
+        public PlayerInput inputControl;
+
+        public List<AudioClip> MoveSound;
+        public AudioClip SlashSound;
+        public AudioClip MissSound;
+        public AudioClip KillSound;
 
         [SerializeField]
         private Vector2 MousePos;
@@ -21,6 +30,14 @@ namespace RythmGame
         private void Start()
         {
             AimLine = this.GetComponent<LineRenderer>();
+            animator = this.GetComponent<Animator>();
+            if (GameEventManager.instance)
+            {
+                GameEventManager.instance.GameOver.AddListener(GameOverFunc);
+                GameEventManager.instance.DamageAction.AddListener(SlashEndAction);
+                GameEventManager.instance.BeatMiss.AddListener(PlayMissSound);
+                GameEventManager.instance.BeatMiss.AddListener(PlayResetAni);
+            }
             SetState(new P_ActionState(this));
         }
 
@@ -39,6 +56,7 @@ namespace RythmGame
             if (context.performed)
             {
                 MousePos = Camera.main.ScreenToWorldPoint(context.ReadValue<Vector2>());
+                if (CharacterSprite) CharacterSprite.flipX = MousePos.x > this.transform.position.x;
             }
         }
 
@@ -69,8 +87,64 @@ namespace RythmGame
             if (obj.GetComponent<SlahLineScript>()) obj.GetComponent<SlahLineScript>().SetLineRender(start, end);
         }
 
+        void GameOverFunc()
+        {
+            inputControl.enabled = false;
+            SetState(new P_NormalState(this));
+        }
 
+        public void PlayMoveAni()
+        {
+            if (animator) animator.SetTrigger("Move");
+        }
 
+        void SlashEndAction(bool EnemyKilled)
+        {
+            if (EnemyKilled)
+            {
+                StartCoroutine(playkillsound());
+                PlayDealDamageAni();
+            }
+            else PlayEndSlashAni();
+        }
+
+        public void PlayEndSlashAni()
+        {
+            if (animator) animator.SetTrigger("EndSlash");
+        }
+
+        public void PlayDealDamageAni()
+        {
+            if (animator) animator.SetTrigger("DealDamage");
+        }
+
+        public void PlayResetAni()
+        {
+            if (animator) animator.SetTrigger("Reset");
+        }
+
+        public void PlayMoveSound()
+        {
+            if (AudioController.instance && MoveSound.Count > 0) AudioController.instance.PlaySound(MoveSound[Random.Range(0, MoveSound.Count)]);
+        }
+
+        public void PlaySlashSound()
+        {
+            if (AudioController.instance) AudioController.instance.PlaySound(SlashSound);
+        }
+
+        public void PlayMissSound()
+        {
+            if (AudioController.instance) AudioController.instance.PlaySound(MissSound);
+        }
+
+        IEnumerator playkillsound()
+        {
+            yield return new WaitForSeconds(0.1f);
+            AudioController.instance.PlaySound(KillSound);
+            yield return new WaitForSeconds(0.2f);
+            if (RythmGameManager.instance) RythmGameManager.instance.SpawnEnemy();
+        }
 
     }
 }

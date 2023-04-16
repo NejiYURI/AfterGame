@@ -33,11 +33,15 @@ namespace RythmGame
                 if (BeatController.instance.BeatCorrect(false))
                 {
                     characterScript.SetState(new P_DashState(characterScript, characterScript.AimLine.GetPosition(0), characterScript.AimLine.GetPosition(1)));
+                    characterScript.PlayMoveAni();
+                    characterScript.PlayMoveSound();
                 }
             }
             else
             {
                 characterScript.SetState(new P_DashState(characterScript, characterScript.AimLine.GetPosition(0), characterScript.AimLine.GetPosition(1)));
+                characterScript.PlayMoveAni();
+                characterScript.PlayMoveSound();
             }
 
         }
@@ -48,14 +52,16 @@ namespace RythmGame
             {
                 if (BeatController.instance.BeatCorrect(true))
                 {
+                    characterScript.PlaySlashSound();
                     if (GameEventManager.instance) GameEventManager.instance.DealDamage.Invoke();
                 }
             }
             else
             {
                 if (GameEventManager.instance) GameEventManager.instance.DealDamage.Invoke();
+                characterScript.PlaySlashSound();
             }
-            
+
         }
 
     }

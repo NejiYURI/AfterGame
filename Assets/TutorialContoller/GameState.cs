@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace MainGameNormal
+namespace Tutorial
 {
     public class GameState
     {
-        protected MainGameManager gameManager;
-        public GameState(MainGameManager _gameManager)
+        protected TutorialManager gameManager;
+        public GameState(TutorialManager _gameManager)
         {
             this.gameManager = _gameManager;
         }
@@ -17,6 +17,11 @@ namespace MainGameNormal
         }
 
         public virtual void StateEnd()
+        {
+
+        }
+
+        public virtual void BeatSuccess(bool IsSlash)
         {
 
         }

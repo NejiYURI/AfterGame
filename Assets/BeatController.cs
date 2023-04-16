@@ -13,14 +13,9 @@ public class BeatController : MonoBehaviour
     [SerializeField]
     private List<BeatData> Beats;
 
-
-
     public Transform MousePos;
 
     public float BeatTime = 1f;
-
-
-
 
     private void Awake()
     {
@@ -34,8 +29,7 @@ public class BeatController : MonoBehaviour
             GameEventManager.instance.SpawnBeat.AddListener(SpawnBeat);
             GameEventManager.instance.SpawnSlash.AddListener(SpawnSlash);
         }
-        if (GameSettingScript.instance) BeatTime = GameSettingScript.instance.Sheet.BeatTime;
-
+        if (GameSettingScript.instance && GameSettingScript.instance.Sheet) BeatTime = GameSettingScript.instance.Sheet.BeatTime;
     }
 
     public void RemoveBeat(GameObject _target)
@@ -47,9 +41,12 @@ public class BeatController : MonoBehaviour
 
             if (!rslt.IsUsed)
             {
-                if (RythmGameManager.instance) RythmGameManager.instance.ShowBeatResult(false, rslt.IsSlash);
-                if (GameEventManager.instance) GameEventManager.instance.BeatOver.Invoke();
-                if (rslt.IsSlash && GameEventManager.instance) GameEventManager.instance.DamageFalied.Invoke();
+                if (GameEventManager.instance)
+                {
+                    GameEventManager.instance.BeatResult.Invoke(false, rslt.IsSlash);
+                    GameEventManager.instance.BeatOver.Invoke();
+                    if(rslt.IsSlash) GameEventManager.instance.DamageFalied.Invoke();
+                }
             }
             Beats.Remove(rslt);
 
@@ -66,8 +63,11 @@ public class BeatController : MonoBehaviour
         Beats[0].IsUsed = true;
         Destroy(Beats[0].Obj);
         Beats.RemoveAt(0);
-        if (RythmGameManager.instance) RythmGameManager.instance.ShowBeatResult(Rslt, IsSlash);
-        if (GameEventManager.instance) GameEventManager.instance.BeatOver.Invoke();
+        if (GameEventManager.instance)
+        {
+            GameEventManager.instance.BeatResult.Invoke(Rslt, IsSlash);
+            GameEventManager.instance.BeatOver.Invoke();
+        }
         return Rslt;
     }
 
@@ -80,7 +80,7 @@ public class BeatController : MonoBehaviour
 
     void SpawnSlash()
     {
-       
+
         Beats.Add(new BeatData(Instantiate(SpawnCircle(SlashCircle), MousePos), true));
     }
 

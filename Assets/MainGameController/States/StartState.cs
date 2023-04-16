@@ -1,22 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class StartState : GameState
+namespace MainGameNormal
 {
-    public StartState(MainGameManager gameManager) : base(gameManager)
+    public class StartState : GameState
     {
-        
-    }
-    public override void StateStart()
-    {
-        gameManager.StartCoroutine(StartTimer());
-    }
+        public StartState(MainGameManager gameManager) : base(gameManager)
+        {
 
-    IEnumerator StartTimer()
-    {
-        yield return new WaitForSeconds(0.5f);
-        gameManager.SetState(new ActionState(gameManager));
-    }
+        }
+        public override void StateStart()
+        {
+            gameManager.StartCoroutine(StartTimer());
+        }
 
+        IEnumerator StartTimer()
+        {
+            yield return new WaitForSeconds(0.5f);
+            gameManager.SetState(new ActionState(gameManager));
+        }
+
+    }
 }

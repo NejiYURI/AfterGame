@@ -25,4 +25,14 @@ public class TitleScript : MonoBehaviour
         }
         
     }
+
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
