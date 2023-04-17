@@ -2783,7 +2783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1638960555}
-  offset: 0
+  offset: 0.2
   samples: []
   Ratio: 0
 --- !u!1 &1653504124
@@ -3084,7 +3084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98780f37e8d3884e95724108605a61c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sheet: {fileID: 11400000, guid: c525814aecdc6114ba0caf8dae310029, type: 2}
+  Sheet: {fileID: 11400000, guid: 615bc254b7f4e624089582262c6abea6, type: 2}
 --- !u!4 &1673806295
 Transform:
   m_ObjectHideFlags: 0

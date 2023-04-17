@@ -68,10 +68,6 @@ public class RythmGameManager : MonoBehaviour
         Score = 0;
         AddScore(0);
         if (HealthTxt != null) HealthTxt.text = PlayerHealth.ToString();
-        for (int i = 0; i < EnemyStartNum; i++)
-        {
-            SpawnEnemy();
-        }
         if (GameEventManager.instance)
         {
             GameEventManager.instance.EnemyDead.AddListener(EnemyDead);
@@ -93,8 +89,13 @@ public class RythmGameManager : MonoBehaviour
         sheetDatasCount.AddRange(musicSheet.sheetDatas);
         this.BeatTime = musicSheet.BeatTime;
         this.SpawnFreq = musicSheet.SpawnFreq;
+        this.EnemyStartNum = musicSheet.StartSpawn;
         if (SlashRemain != null) SlashRemain.text = GetDisToNextSlash().ToString();
         if (SongDetailTxt != null) SongDetailTxt.text = musicSheet.MusicName + " - " + musicSheet.Composer;
+        for (int i = 0; i < EnemyStartNum; i++)
+        {
+            SpawnEnemy();
+        }
         StartCoroutine(GameStartCountDown());
     }
 
@@ -248,7 +249,7 @@ public class RythmGameManager : MonoBehaviour
                 randIndex = Random.Range(0, SpawnPoints.Count);
             } while (Vector2.Distance(SpawnPoints[randIndex].position, this.PlayerObj.transform.position) <= 3f);
 
-            Vector2 s_Pos = SpawnPoints[randIndex].position;
+            Vector2 s_Pos = (Vector2)SpawnPoints[randIndex].position+new Vector2(Random.Range(-0.3f,0.3f), Random.Range(-0.3f, 0.3f));
             //Vector2 s_Pos = new Vector2(Random.Range(-SpawnX, SpawnX), Random.Range(-SpawnY, SpawnY));
             GameObject obj = Instantiate(enemy, s_Pos, Quaternion.identity);
             if (obj.GetComponent<EnemyScript>()) obj.GetComponent<EnemyScript>().MainTarget = this.PlayerObj.transform;

@@ -8,6 +8,7 @@ public class MusicSheet : ScriptableObject
     public string MusicName;
     public string Composer;
     public float SpawnFreq=1f;
+    public int StartSpawn=3;
     public float BeatTime=1f;
     public Color BKminColor = Color.gray;
     public Color BKmaxColor = Color.gray;
