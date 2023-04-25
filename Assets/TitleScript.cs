@@ -31,6 +31,11 @@ public class TitleScript : MonoBehaviour
         SceneManager.LoadScene("Tutorial");
     }
 
+    public void ClickLink()
+    {
+        Application.OpenURL("https://neji-yuri.itch.io/tempo-slash");
+    }
+
     public void QuitGame()
     {
         Application.Quit();

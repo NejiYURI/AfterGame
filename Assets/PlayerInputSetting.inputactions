@@ -138,6 +138,82 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "SoundControl",
+            "id": "da672f50-e4a5-420e-b020-d1f09d1be212",
+            "actions": [
+                {
+                    "name": "TogglePanel",
+                    "type": "Button",
+                    "id": "c9946a1d-48cd-4b97-bb02-6f055c8acbb7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "da1101ce-3d77-43f7-be9f-540086c5010c",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TogglePanel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "MainControl",
+            "id": "1f138db7-0808-43a9-8536-81e71bbe5d13",
+            "actions": [
+                {
+                    "name": "RetrunMenu",
+                    "type": "Button",
+                    "id": "ed9ae2a3-84df-4ecd-bff0-091d6d1bbb30",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Retry",
+                    "type": "Button",
+                    "id": "0ac79229-2924-49e5-b148-9c8129267fa9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ff85ace2-f296-4406-8f8b-69e82f259675",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RetrunMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "72a3030c-d87b-4621-a731-12c86a943986",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Retry",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

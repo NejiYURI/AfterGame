@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class RythmGameManager : MonoBehaviour
 {
@@ -132,11 +133,6 @@ public class RythmGameManager : MonoBehaviour
                 sheetDatas.RemoveAt(0);
 
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ReturnToTitle();
         }
     }
 
@@ -379,8 +375,13 @@ public class RythmGameManager : MonoBehaviour
         EnemySlashedCount++;
     }
 
-    public void ReturnToTitle()
+    public void ReturnToTitle(InputAction.CallbackContext context)
     {
         SceneManager.LoadScene("Title");
+    }
+
+    public void Retry(InputAction.CallbackContext context)
+    {
+        RestartLevel();
     }
 }
